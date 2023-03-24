@@ -8,10 +8,12 @@ function compareArrays(arr1, arr2) {
   });
 }
 
-
 function getUsersNamesInAgeRange(users, gender) {
-  const filteredUsers = users.filter(user => user.gender === gender); 
-  const sumOfAges = filteredUsers.reduce((sum, user) => sum + user.age, 0); 
-  const avgAge = sumOfAges / (filteredUsers.length); 
-  return avgAge;
+  const filteredUsers = users.filter(user => user.gender === gender);
+  if (filteredUsers.length === 0) {
+    return 0;
+  }
+  const sumOfAges = filteredUsers.map(user => user.age).reduce((acc, age) => acc + age);
+  return sumOfAges / filteredUsers.length;
 }
+
