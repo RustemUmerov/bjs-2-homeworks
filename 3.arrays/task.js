@@ -10,8 +10,8 @@ function compareArrays(arr1, arr2) {
 
 
 function getUsersNamesInAgeRange(users, gender) {
-  const filteredUsers = users.filter(user => user.gender === gender); // фильтруем пользователей по полу
-  const sumOfAges = filteredUsers.reduce((sum, user) => sum + user.age, 0); // считаем сумму возрастов
-  const avgAge = sumOfAges / (filteredUsers.length || 1); // вычисляем средний возраст
+  const filteredUsers = users.filter(user => user.gender === gender); 
+  const sumOfAges = filteredUsers.reduce((sum, user) => sum + user.age, 0); 
+  const avgAge = sumOfAges / (filteredUsers.length); 
   return avgAge;
 }
