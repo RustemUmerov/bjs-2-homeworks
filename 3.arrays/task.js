@@ -7,13 +7,15 @@ function compareArrays(arr1, arr2) {
     return value === arr2[index];
   });
 }
-
 function getUsersNamesInAgeRange(users, gender) {
   const filteredUsers = users.filter(user => user.gender === gender);
+  
   if (filteredUsers.length === 0) {
     return 0;
   }
-  const sumOfAges = filteredUsers.map(user => user.age).reduce((acc, age) => acc + age);
-  return sumOfAges / filteredUsers.length;
+  
+  const sumAge = filteredUsers.reduce((acc, user) => acc + user.age, 0);
+  return sumAge / filteredUsers.length;
 }
+
 
