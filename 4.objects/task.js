@@ -10,21 +10,21 @@ Student.prototype.setSubject = function (subjectName) {
 }
 
 Student.prototype.addMarks = function (...marks) {
-   if (!this.marks) {
-    console.log("Этот студент отчислен!");
-    return;
+   if (this.marks) {
+    this.marks.push(...marksToAdd);
   }
-  this.marks.push(...marksToAdd);
 }
 
 
 
 Student.prototype.getAverage = function () {
-   if (!this.marks || this.marks.length === 0) {
+   if (this.marks && this.marks.length) {
+    let sum = this.marks.reduce((acc, cur) => acc + cur);
+    let avg = sum / this.marks.length;
+    return +avg.toFixed(1);
+  } else {
     return 0;
   }
-  const sum = this.marks.reduce((acc, mark) => acc + mark, 0);
-  return sum / this.marks.length;
 }
 
 Student.prototype.exclude = function (reason) {
