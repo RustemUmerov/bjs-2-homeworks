@@ -86,3 +86,50 @@ class Library {
     return null;
   }
 }
+class Student {
+  constructor(name) {
+    this.name = name;
+    this.marks = {};
+  }
+
+  addMark(mark, subject) {
+    if (mark < 2 || mark > 5) {
+      return; // валидация оценки
+    }
+
+    if (!this.marks[subject]) {
+      this.marks[subject] = [];
+    }
+
+    this.marks[subject].push(mark);
+  }
+
+  getAverageBySubject(subject) {
+    const marks = this.marks[subject];
+
+    if (!marks || marks.length === 0) {
+      return 0; // если предмет отсутствует или нет оценок, возвращаем 0
+    }
+
+    const sum = marks.reduce((acc, mark) => acc + mark, 0);
+    const average = sum / marks.length;
+
+    return average;
+  }
+
+  getAverage() {
+    const subjects = Object.keys(this.marks);
+
+    if (subjects.length === 0) {
+      return 0; // если нет предметов, возвращаем 0
+    }
+
+    const sum = subjects.reduce((acc, subject) => {
+      const average = this.getAverageBySubject(subject);
+      return acc + average;
+    }, 0);
+
+    const average = sum / subjects.length;
+    return average;
+  }
+}
