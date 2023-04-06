@@ -17,14 +17,10 @@ class AlarmClock {
     this.alarmCollection.push({id, time, callback, canCall: true});
   }
 
-  removeClock(time) {
-    this.alarmCollection = this.alarmCollection.filter((alarm) => {
-        if (alarm.time !== time) {
-            return true;
-        }
-        return false;
-    });
+removeClock(time) {
+  this.alarmCollection = this.alarmCollection.filter(alarm => alarm.time !== time);
 }
+
 
 
 
