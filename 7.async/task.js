@@ -8,46 +8,52 @@ class AlarmClock {
     if (!time || !callback) {
       throw new Error('Отсутствуют обязательные аргументы');
     }
-    if (this.alarmCollection.some(alarm => alarm.id === id)) {
-      console.warn('Уже присутствует звонок с таким id');
+
+    if (this.alarmCollection.some(alarm => alarm.time === time)) {
+      console.warn('Уже присутствует звонок на это же время');
       return;
     }
-    this.alarmCollection.push({ id, time, callback, canCall: true });
+
+    this.alarmCollection.push({
+      id: id,
+      time: time,
+      callback: callback,
+      canCall: true,
+    });
   }
 
   removeClock(id) {
-    const lengthBefore = this.alarmCollection.length;
-    this.alarmCollection = this.alarmCollection.filter(alarm => alarm.id !== id);
-    const lengthAfter = this.alarmCollection.length;
-    return lengthBefore !== lengthAfter;
+    const index = this.alarmCollection.findIndex(alarm => alarm.id === id);
+    if (index !== -1) {
+      this.alarmCollection.splice(index, 1);
+    }
   }
 
   getCurrentFormattedTime() {
-    const date = new Date();
-    let hours = date.getHours().toString();
-    if (hours.length < 2) {
-      hours = '0' + hours;
-    }
-    let minutes = date.getMinutes().toString();
-    if (minutes.length < 2) {
-      minutes = '0' + minutes;
-    }
-    return hours + ':' + minutes;
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    return `${hours}:${minutes}`;
   }
 
   start() {
     if (this.intervalId !== null) {
       return;
     }
-    this.intervalId = setInterval(() => {
+
+    const checkAlarms = () => {
       const currentTime = this.getCurrentFormattedTime();
+
       this.alarmCollection.forEach(alarm => {
         if (alarm.time === currentTime && alarm.canCall) {
           alarm.canCall = false;
           alarm.callback();
         }
       });
-    }, 1000);
+    };
+
+    checkAlarms();
+    this.intervalId = setInterval(checkAlarms, 1000);
   }
 
   stop() {
