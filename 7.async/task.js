@@ -14,24 +14,21 @@ class AlarmClock {
       return;
     }
 
-    this.alarmCollection.push({
-      id: id,
-      time: time,
-      callback: callback,
-      canCall: true,
-    });
+    this.alarmCollection.push({id, time, callback, canCall: true});
   }
 
   removeClock(time) {
-  this.alarmCollection = this.alarmCollection.filter(alarm => alarm.time !== time);
-}
+    this.alarmCollection = this.alarmCollection.filter(alarm => alarm.time !== time);
+  }
 
+  clearAlarms() {
+    this.stop();
+    this.alarmCollection = [];
+  }
 
   getCurrentFormattedTime() {
-    const now = new Date();
-    const hours = now.getHours().toString().padStart(2, '0');
-    const minutes = now.getMinutes().toString().padStart(2, '0');
-    return `${hours}:${minutes}`;
+    const currentDate = new Date();
+    return currentDate.getHours().toString().padStart(2, '0') + ':' + currentDate.getMinutes().toString().padStart(2, '0');
   }
 
   start() {
@@ -39,34 +36,23 @@ class AlarmClock {
       return;
     }
 
-    const checkAlarms = () => {
-      const currentTime = this.getCurrentFormattedTime();
-
+    this.intervalId = setInterval(() => {
       this.alarmCollection.forEach(alarm => {
-        if (alarm.time === currentTime && alarm.canCall) {
+        if (alarm.time === this.getCurrentFormattedTime() && alarm.canCall) {
           alarm.canCall = false;
           alarm.callback();
         }
       });
-    };
-
-    checkAlarms();
-    this.intervalId = setInterval(checkAlarms, 1000);
+    }, 1000);
   }
 
   stop() {
     clearInterval(this.intervalId);
     this.intervalId = null;
+    this.resetAllCalls();
   }
 
   resetAllCalls() {
-    this.alarmCollection.forEach(alarm => {
-      alarm.canCall = true;
-    });
-  }
-
-  clearAlarms() {
-    this.stop();
-    this.alarmCollection = [];
+    this.alarmCollection.forEach(alarm => alarm.canCall = true);
   }
 }
