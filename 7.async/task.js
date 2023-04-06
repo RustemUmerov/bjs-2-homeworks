@@ -18,8 +18,12 @@ class AlarmClock {
   }
 
   removeClock(time) {
-    this.alarmCollection = this.alarmCollection.filter(alarm => alarm.time !== time);
+  const filteredAlarms = this.alarmCollection.filter(item => item.time === time);
+  if (filteredAlarms.length) {
+    this.alarmCollection = this.alarmCollection.filter(item => item.time !== time);
   }
+}
+
 
   clearAlarms() {
     this.stop();
