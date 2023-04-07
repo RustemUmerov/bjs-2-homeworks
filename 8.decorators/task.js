@@ -23,7 +23,7 @@ function cachingDecoratorNew(func) {
 }
 
 //Задача № 2
-function debounceDecoratorNew(func, ms) {
+/*function debounceDecoratorNew(func, ms) {
   let timeoutId;
 
   function wrapper(...args) {
@@ -48,8 +48,8 @@ function debounceDecoratorNew(func, ms) {
 
   return wrapper;
 }
-
-/*function debounceDecoratorNew(func, ms) {
+*/
+function debounceDecoratorNew(func, ms) {
   let timeoutId;
 
   function wrapper(...args) {
@@ -74,4 +74,4 @@ timeoutId = setTimeout(() => {
   wrapper.allCount = 0;
 
   return wrapper;
-}*/
+}
