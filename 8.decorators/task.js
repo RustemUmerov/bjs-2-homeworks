@@ -36,10 +36,11 @@ function debounceDecoratorNew(func, ms) {
     }
 
     timeoutId = setTimeout(() => {
-      timeoutId = null;
       if (args.length > 0) {
         func.apply(this, args);
       }
+      timeoutId = null;
+      func.apply(this, args); // Добавленный вызов функции
     }, ms);
   }
 
