@@ -5,37 +5,39 @@ class AlarmClock {
   }
 
   addClock(time, callback, id) {
-    if (!time || !callback) {
+    if (!id) {
       throw new Error('Отсутствуют обязательные аргументы');
     }
 
-    if (this.alarmCollection.some(alarm => alarm.time === time)) {
+    if (this.alarmCollection.find(alarm => alarm.id === id)) {
       console.warn('Уже присутствует звонок на это же время');
       return;
     }
 
-    this.alarmCollection.push({id, time, callback, canCall: true});
+    this.alarmCollection.push({ id, time, callback, canCall: true });
   }
 
-removeClock(id) {
-    this.alarmCollection = this.alarmCollection.filter(alarm => alarm.id !== id);
-  }
+  removeClock(id) {
+    const alarmIndex = this.alarmCollection.findIndex(alarm => alarm.id === id);
 
+    if (alarmIndex === -1) {
+      return false;
+    }
 
-
-
-  clearAlarms() {
-    this.stop();
-    this.alarmCollection = [];
+    this.alarmCollection.splice(alarmIndex, 1);
+    return true;
   }
 
   getCurrentFormattedTime() {
-    const currentDate = new Date();
-    return currentDate.getHours().toString().padStart(2, '0') + ':' + currentDate.getMinutes().toString().padStart(2, '0');
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+
+    return `${hours}:${minutes}`;
   }
 
   start() {
-    if (this.intervalId !== null) {
+    if (this.intervalId) {
       return;
     }
 
@@ -52,10 +54,14 @@ removeClock(id) {
   stop() {
     clearInterval(this.intervalId);
     this.intervalId = null;
-    this.resetAllCalls();
   }
 
   resetAllCalls() {
     this.alarmCollection.forEach(alarm => alarm.canCall = true);
+  }
+
+  clearAlarms() {
+    this.stop();
+    this.alarmCollection = [];
   }
 }
