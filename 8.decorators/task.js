@@ -1,4 +1,7 @@
 //Задача № 1
+function md5(str) {
+  return CryptoJS.MD5(JSON.stringify(str)).toString();
+}
 function cachingDecoratorNew(func) {
   let cache = [];
 
