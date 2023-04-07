@@ -22,9 +22,11 @@ class AlarmClock {
     });
   }
 
-  removeClock(id) {
-    this.alarmCollection = this.alarmCollection.filter(alarm => alarm.id !== id);
-  }
+  removeClock(time) {
+  this.alarmCollection = this.alarmCollection.filter(alarm => alarm.time !== time);
+}
+
+
 
   getCurrentFormattedTime() {
     const now = new Date();
