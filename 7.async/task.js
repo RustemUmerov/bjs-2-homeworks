@@ -69,10 +69,10 @@ removeClock(time) {
 
   clearAlarms() {
     this.stop();
-	this.resetAllCalls();
 	this.alarmCollection.forEach(alarm => {
     alarm.canCall = true;
   });
+	this.resetAllCalls();
     this.alarmCollection = [];
   }
 }
