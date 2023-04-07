@@ -4,7 +4,7 @@ class AlarmClock {
     this.intervalId = null;
   }
 
-  addClock(time, callback, id) {
+  addClock(time, callback) {
     if (!time || !callback) {
       throw new Error('Отсутствуют обязательные аргументы');
     }
@@ -15,7 +15,6 @@ class AlarmClock {
     }
 
     this.alarmCollection.push({
-      id: id,
       time: time,
       callback: callback,
       canCall: true,
