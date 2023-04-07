@@ -11,7 +11,7 @@ class AlarmClock {
 
     if (this.alarmCollection.some(alarm => alarm.time === time)) {
       console.log('Уже присутствует звонок на это же время');
-      return;
+      
     }
 
     this.alarmCollection.push({
