@@ -23,25 +23,26 @@ function cachingDecoratorNew(func) {
 }
 
 //Задача № 2
+
 function debounceDecoratorNew(func, ms) {
   let timeoutId;
 
   function wrapper(...args) {
-    wrapper.count += 1;
-    wrapper.allCount += 1;
-    clearTimeout(timeoutId);
-
     if (!timeoutId) {
-      func.apply(this, args);
-    }
+  func.apply(this, args);
+  wrapper.count += 1;
+  wrapper.allCount += 1;
+}
 
-    timeoutId = setTimeout(() => {
-      if (args.length > 0) {
-        func.apply(this, args);
-      }
-      timeoutId = null;
-      func.apply(this, args); // Добавленный вызов функции
-    }, ms);
+clearTimeout(timeoutId);
+
+timeoutId = setTimeout(() => {
+  timeoutId = null;
+  if (args.length > 0) {
+    func.apply(this, args);
+    wrapper.allCount += 1;
+  }
+}, ms);
   }
 
   wrapper.count = 0;
@@ -49,31 +50,3 @@ function debounceDecoratorNew(func, ms) {
 
   return wrapper;
 }
-
-/*
-function debounceDecoratorNew(func, ms) {
-  let timeoutId;
-
-  function wrapper(...args) {
-    wrapper.count += 1;
-    wrapper.allCount += 1;
-    clearTimeout(timeoutId);
-
-    if (!timeoutId) {
-      func.apply(this, args);
-    }
-
-    timeoutId = setTimeout(() => {
-      timeoutId = null;
-      if (args.length > 0) {
-        func.apply(this, args);
-      }
-    }, ms);
-  }
-
-  wrapper.count = 0;
-  wrapper.allCount = 0;
-
-  return wrapper;
-}
-*/
