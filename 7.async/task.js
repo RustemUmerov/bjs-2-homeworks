@@ -23,10 +23,7 @@ class AlarmClock {
   }
 
   removeClock(id) {
-    const index = this.alarmCollection.findIndex(alarm => alarm.id === id);
-    if (index !== -1) {
-      this.alarmCollection.splice(index, 1);
-    }
+    this.alarmCollection = this.alarmCollection.filter(alarm => alarm.id !== id);
   }
 
   getCurrentFormattedTime() {
