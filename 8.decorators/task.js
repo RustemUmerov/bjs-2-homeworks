@@ -49,9 +49,9 @@ function cachingDecoratorNew(func) {
   return wrapper;
 }
 */
-/*function debounceDecoratorNew(func, ms) {
+function debounceDecoratorNew(func, ms) {
   let timeoutId;
-
+  
   function wrapper(...args) {
 	  clearTimeout(timeoutId);
     if (!timeoutId) {
@@ -67,14 +67,15 @@ timeoutId = setTimeout(() => {
     wrapper.allCount += 1;
   }
 }, ms);
+wrapper.count += 1;
   }
 
   wrapper.count = 0;
   wrapper.allCount = 0;
 
   return wrapper;
-}*/
-function debounceDecoratorNew(func, ms) {
+}
+/*function debounceDecoratorNew(func, ms) {
   let timeoutId;
   let count = 0;
   let allCount = 0;
@@ -121,3 +122,4 @@ function debounceDecoratorNew(func, ms) {
 
   return wrapper;
 }
+*/
