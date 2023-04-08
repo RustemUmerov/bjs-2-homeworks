@@ -49,7 +49,7 @@ function cachingDecoratorNew(func) {
   return wrapper;
 }
 */
-function debounceDecoratorNew(func, ms) {
+/*function debounceDecoratorNew(func, ms) {
   let timeoutId;
   
   function wrapper(...args) {
@@ -65,17 +65,16 @@ timeoutId = setTimeout(() => {
   if (args.length > 0) {
     func.apply(this, args);
     wrapper.allCount += 1;
-	wrapper.count += 1;
   }
 }, ms);
-/*wrapper.count += 1;*/
+wrapper.count += 1;
   }
 
   wrapper.count = 0;
   wrapper.allCount = 0;
 
   return wrapper;
-}
+}*/
 /*function debounceDecoratorNew(func, ms) {
   let timeoutId;
   let count = 0;
@@ -124,3 +123,29 @@ timeoutId = setTimeout(() => {
   return wrapper;
 }
 */
+
+function debounceDecoratorNew(func, ms) {
+  let timeoutId;
+  
+  function wrapper(...args) {
+    clearTimeout(timeoutId);
+    if (args.length > 0 && !timeoutId) {
+      func.apply(this, args);
+      wrapper.count += 1;
+    }
+    wrapper.allCount += 1;
+    timeoutId = setTimeout(() => {
+      timeoutId = null;
+      if (args.length > 0) {
+        func.apply(this, args);
+        wrapper.allCount += 1;
+        wrapper.count += 1;
+      }
+    }, ms);
+  }
+
+  wrapper.count = 0;
+  wrapper.allCount = 0;
+
+  return wrapper;
+}
