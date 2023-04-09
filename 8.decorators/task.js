@@ -23,107 +23,6 @@ function cachingDecoratorNew(func) {
 }
 
 //Задача № 2
-/*function debounceDecoratorNew(func, ms) {
-  let timeoutId;
-
-  function wrapper(...args) {
-    wrapper.count += 1;
-    clearTimeout(timeoutId);
-
-    if (!timeoutId) {
-      func.apply(this, args);
-    }
-
-    timeoutId = setTimeout(() => {
-      timeoutId = null;
-      if (args.length > 0) {
-        func.apply(this, args);
-        wrapper.allCount += 1;
-      }
-    }, ms);
-  }
-
-  wrapper.count = 0;
-  wrapper.allCount = 0;
-
-  return wrapper;
-}
-*/
-/*function debounceDecoratorNew(func, ms) {
-  let timeoutId;
-  
-  function wrapper(...args) {
-	  clearTimeout(timeoutId);
-    if (!timeoutId) {
-  func.apply(this, args);
-  wrapper.count += 1;
-  
-}
-wrapper.allCount += 1;
-timeoutId = setTimeout(() => {
-  timeoutId = null;
-  if (args.length > 0) {
-    func.apply(this, args);
-    wrapper.allCount += 1;
-  }
-}, ms);
-wrapper.count += 1;
-  }
-
-  wrapper.count = 0;
-  wrapper.allCount = 0;
-
-  return wrapper;
-}*/
-/*function debounceDecoratorNew(func, ms) {
-  let timeoutId;
-  let count = 0;
-  let allCount = 0;
-
-  function wrapper(...args) {
-    clearTimeout(timeoutId);
-
-    if (!timeoutId) {
-      func.apply(this, args);
-      count += 1;
-      allCount += 1;
-    }
-
-    timeoutId = setTimeout(() => {
-      timeoutId = null;
-      if (args.length > 0) {
-        func.apply(this, args);
-        allCount += 1;
-      }
-    }, ms);
-    count += 1;
-  }
-
-  wrapper.count = 0;
-  wrapper.allCount = 0;
-
-  Object.defineProperty(wrapper, 'count', {
-    get: function() {
-      return count;
-    },
-    set: function(value) {
-      count = value;
-    }
-  });
-
-  Object.defineProperty(wrapper, 'allCount', {
-    get: function() {
-      return allCount;
-    },
-    set: function(value) {
-      allCount = value;
-    }
-  });
-
-  return wrapper;
-}
-*/
-
 function debounceDecoratorNew(func, ms) {
   let timeoutId;
   
@@ -135,10 +34,8 @@ function debounceDecoratorNew(func, ms) {
     }
     wrapper.allCount += 1;
     timeoutId = setTimeout(() => {
-     /* timeoutId = null;*/
       if (args.length > 0) {
         func.apply(this, args);
-        /*wrapper.allCount += 1;*/
         wrapper.count += 1;
       }
     }, ms);
